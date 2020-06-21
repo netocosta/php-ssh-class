@@ -8,6 +8,6 @@ Example in: example.php
 
 Class in SSH.class.php
 
-### Return
+### Return example.php
 
 ![Print example.php](https://i.imgur.com/wmz5LN7.png)
