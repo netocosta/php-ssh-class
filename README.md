@@ -1,5 +1,9 @@
 # Class SSH to execute commands via ssh in server remote
 
+### Pre-requisites
+
+extension ssh2 1.2 / libssh2 1.8.0 in php server
+
 ### Usage
 
 A finalidade é facilitar o uso, então com isso fica muito fácil executar um comando no bash de qualquer servidor, acessando-o pelo ssh diretamente pelo php.
