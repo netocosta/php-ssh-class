@@ -10,10 +10,10 @@ A finalidade é facilitar o uso, então com isso fica muito fácil executar um c
 
 Veja como é simples, basta configurar o host, user e pass no SSH.class.php e depois:
 
-include_once "SSH.class.php";
-$ssh = new SSH;
-print_r($ssh->execute("ls -all"));
-$ssh->close();
+    include_once "SSH.class.php";
+    $ssh = new SSH;
+    print_r($ssh->execute("ls -all"));
+    $ssh->close();
 
 Complete example in: example.php
 
