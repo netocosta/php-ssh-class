@@ -17,14 +17,11 @@ class SSH
    * @param string $user
    * @param string $pass
    */
-  private $host = "ServerSSH";
-  private $port = 22;
-  private $user = "root";
-  private $pass = "root";
+  private $host, $port, $user, $pass;
 
-  function __construct ()
+  function __construct ($server='localhost', $port=22, $user='root', $pass='root')
   {
-    $this->connect();
+    $this->connect($server, $port, $user, $pass);
   }
 
   /**
@@ -32,10 +29,10 @@ class SSH
    *
    * @return void
    */
-  function connect ()
+  function connect ($server, $port, $user, $pass)
   {
-    $this->connection = ssh2_connect('ServerSSH', 22);
-    ssh2_auth_password($this->connection, 'root', 'root');
+    $this->connection = ssh2_connect($server, $port);
+    ssh2_auth_password($this->connection, $user, $pass);
   }
 
   /**
@@ -44,7 +41,7 @@ class SSH
    * @param string $command
    * @return void
    */
-  function execute ($command) 
+  function execute ($command, $callback=true) 
   {
     $this->stream = ssh2_exec($this->connection, $command);
     $this->errorStream = ssh2_fetch_stream($this->stream, SSH2_STREAM_STDERR);
@@ -54,17 +51,18 @@ class SSH
     $return = stream_get_contents($this->stream); 
     $error = stream_get_contents($this->errorStream);
 
-    $condOne = strlen($return) > 0;
-    $condTwo = strlen($error) == 0;
-    $condThree = strlen($return) == 0;
+    $lenReturn = strlen($return);
+    $lenError = strlen($error);
+    $condOne = $lenReturn > 0;
+    $condTwo = $lenError == 0;
+    $condThree = $lenReturn == 0;
 
-    if (($condOne) AND ($condTwo)) {
-      return "<b>Command:</b> {$command}<br /><b>Retorno:</b><br />{$return}<br /><br />";
-    } elseif (($condTwo) AND ($condThree)) {
-      return "<b>Command:</b> {$command}.<br /><b>Retorno:</b><br />Comando não efetua nenhum retorno.<br /><br />";
-    } else {
-      return "<b>Command:</b> {$command}<br /><b>Retorno:</b><br />{$error}<br /><br />";
-    }
+    if ($callback):
+      if (($condOne) AND ($condTwo)): return $return;
+      elseif (($condTwo) AND ($condThree)): return "Comando não efetua nenhum retorno.";
+      else: return $error;
+      endif;
+    endif;
 
     return null;
 
