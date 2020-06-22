@@ -9,16 +9,16 @@ date_default_timezone_set('America/Sao_Paulo');
 include_once './SSH.class.php';
 
 // Inicia a classe SSH, que no __construct já faz a conexão.
-$ssh = new SSH;
+$ssh = new SSH('ServerSSH', 22, 'root', 'root');
 
 // abertura da tag <pre> para ver os dados "como são escritos"
 echo '<pre>';
 
-// execução do primeiro comando no servidor SSH
-print_r($ssh->execute("echo \"".date('d/m/Y H:i:s')."\" > /date.txt"));
+// execução do primeiro comando no servidor SSH, segundo parametro: true -> com retorno.. false -> sem retorno
+$ssh->execute("echo \"".date('d/m/Y H:i:s')."\" > /date.txt", false);
 
-// execução do segundo comando no servidor SSH
-print_r($ssh->execute('cat /date.txt'));
+// execução do segundo comando no servidor SSH, segundo parametro: true -> com retorno.. false -> sem retorno
+print_r($ssh->execute('cat /date.txt', true));
 
 // fecha a tag <pre>
 echo '</pre>';
