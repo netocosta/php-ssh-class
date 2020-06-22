@@ -1,4 +1,4 @@
-# Class SSH to execute commnands via ssh in server remote
+# Class SSH to execute commands via ssh in server remote
 
 ### Usage
 
