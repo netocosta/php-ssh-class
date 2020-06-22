@@ -1,4 +1,4 @@
-# Class SSH to execute commands via ssh in server remote
+# Class SSH to execute commnands via ssh in server remote
 
 ### Pre-requisites
 
@@ -12,9 +12,9 @@ Veja como é simples, basta configurar o host, user e pass no SSH.class.php e de
 
     <?php
       include_once "SSH.class.php";
-      
-      $ssh = new SSH;
-      print_r($ssh->execute("ls -all"));
+
+      $ssh = new SSH('servidor', 22, 'user', 'pass');
+      $ssh->execute("ls -all", true);
       $ssh->close();
     ?>
 
